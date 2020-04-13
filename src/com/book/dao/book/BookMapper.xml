@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.book.BookMapper">
+	<select id="getcount" resultType="int">
+		select count(1) from system_book_info
+		<where>
+			<if test="bookName!=null and bookName!=''">
+				and bookName like concat('%',#{bookName},'%')
+			</if>
+		</where>
+	</select>
+	
+	<!-- 查询数据的方法 -->
+	<select id="getBookList" resultMap="blist">
+		select b.*,c.category from system_book_info b
+		inner join system_book_category c on(c.id=b.categoryId)
+		<where>
+			<if test="bookName!=null and bookName!=''">
+				and bookName like concat('%',#{bookName},'%')
+			</if>
+		</where>
+		limit #{from},#{pageSize}
+	</select>
+	
+	<!-- 删除书籍 -->
+	<delete id="deleteBook">
+		delete from system_book_info where id=#{id}
+	</delete>
+	
+	<!-- 增加数据 -->
+	<insert id="saveBook">
+		insert into system_book_info(bookName,author,categoryId,publisher,price,photo)
+		values(#{bookName},#{author},#{categoryId},#{publisher},#{price},#{photo})
+	</insert>
+	
+	<resultMap type="BookInfo" id="blist" autoMapping="true">
+		<!-- 为BookInfo实体类中的分类实体设置映射 -->
+		<association property="bookCategory" javaType="BookCategory" autoMapping="true">
+		</association>
+	</resultMap>
+</mapper>	

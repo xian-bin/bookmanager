@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.user.BookUserMapper">
+	<!-- 定义一个sql片段 -->
+	<sql id="showColumn">
+		userId,userPsw,userName,role
+	</sql>
+	
+	<!-- 增加用户信息的SQL元素 -->
+	<insert id="saveUser" parameterType="BookUser">
+		insert into system_book_user(<include refid="showColumn"/>)
+		values(#{userId},#{userPsw},#{userName},#{role})
+	</insert>
+	
+	<!--  -->
+	<select id="loginValidate" resultType="BookUser">
+		select 
+		<include refid="showColumn"/>
+		from system_book_user
+		<where>
+			<if test="userId!=null">
+				and userId=#{userId}
+			</if>
+			<if test="userPsw!=null">
+				and userPsw=#{userPsw}
+			</if>
+		</where>
+	</select>
+</mapper>

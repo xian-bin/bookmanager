@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.order.BookOrdersMapper">
+	<!-- 增加订单的操作 -->
+	<insert id="saveOrder" parameterType="BookOrders">
+		insert into system_book_orders(oid,bid,count,curPrice,date,userId) 
+		values(#{oid},#{bid},#{count},#{curPrice},#{date},#{userId})
+	</insert>
+	
+	<!-- 查询指定用户的订单详情 -->
+	<select id="getOrderList" resultMap="blist">
+		select o.*,b.* from system_book_orders o
+		inner join system_book_info b on(o.bid=b.id)
+		<where>
+			<if test="uid != null">
+				and userId=#{uid}
+			</if>
+		</where>
+	</select>
+	
+	<resultMap type="BookOrders" id="blist" autoMapping="true">
+		<!-- 为图书的实例设置映射 -->
+		<association property="bookInfo" javaType="BookInfo" autoMapping="true">
+		</association>
+	</resultMap>
+	
+	<!-- 更新购物车信息的sql元素 -->
+	<update id="updateOrders">
+		update system_book_orders 
+		<set>
+			<if test="count>0">
+				count=#{count},
+			</if>
+			<if test="curPrice>0.0">
+				curPrice=#{curPrice}
+			</if>
+		</set>
+		<where>
+			<if test="oid != null and oid != '' ">
+				and oid=#{oid}
+			</if>
+		</where>
+	</update>
+</mapper>

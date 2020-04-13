@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.book.dao.category.CategoryMapper">
+	<!-- 展示数据 -->
+	<select id="getCategoryList" resultMap="clist"> 
+		selet * from system_book_category
+	</select>
+	
+	<!-- 增加数据 -->
+	<insert id="saveCategory">
+		insert into system_book_category(category) value(#{category})
+	</insert>
+	
+	<!-- 删除分类 -->
+	<delete id="deleteCategory">
+		delete from system_book_category where id=#{id}
+	</delete>
+</mapper>	

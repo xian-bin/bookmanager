@@ -1,0 +1,8 @@
+eclipse.preferences.version=1
+encoding//WebContent/admin/admin-home.jsp=UTF-8
+encoding//WebContent/admin/admin-login.jsp=UTF-8
+encoding//resources/detasource.properties=UTF-8
+encoding//src/com/book/controller/CodeImgServlet.java=UTF-8
+encoding//src/com/book/controller/UserBookController.java=UTF-8
+encoding//src/com/book/dao/order/BookOrdersMapper.java=UTF-8
+encoding/resources=UTF-8
